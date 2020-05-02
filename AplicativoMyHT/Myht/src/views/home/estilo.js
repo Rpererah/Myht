@@ -1,23 +1,22 @@
-import {StyleSheet,Dimensions} from 'react-native';
-const largura = Dimensions.get("screen").width;
+const Container = styled.View`
+  flex: 1;
+  alignItems: center;
+  justifyContent: center;
+  backgroundColor: #F5F5F5;
+`;
 
-const estilo = StyleSheet.create({
-    Texto1: {
-    fontSize:40,
-    alignItems:"center",
-    flexDirection:"row",
-    alignContent:'center'
- 
-   },
-   Texto2: {
-    fontSize:40,
-    alignItems:"center",
-    justifyContent:'center'
-   },
-    Botao:{
-margin:100
-    },
+const Logo = styled.Image`
+  height: 30%;
+  marginBottom: 40px;
+`;
 
-})
-
-export default estilo;
+const Input = styled.TextInput`
+  paddingHorizontal: 20px;
+  paddingVertical: 15px;
+  borderRadius: 5px;
+  backgroundColor: #FFF;
+  alignSelf: stretch;
+  marginBottom: 15px;
+  marginHorizontal: 20px;
+  fontSize: 16px;
+`;
