@@ -10,7 +10,6 @@ import  {
   StyleSheet,
   Keyboard
 } from 'react-native' ;
-import { func } from 'prop-types';
 
 
 const estilo=StyleSheet.create({
@@ -63,6 +62,13 @@ function Login() {
   const [opacity]=useState(new Animated.Value(0));
   const  [logo]=useState(new Animated.ValueXY({x:240,y:300}));
 
+  const [User,setUser]=useState();
+    const [Password,setPassword]=useState();
+
+  isLogado=()=>{    
+    alert(User);
+  }
+
   useEffect(()=>{
     keyDidShowListener=Keyboard.addListener('keyboardDidShow',keyboardDidShow);
     keyDidHideListener=Keyboard.addListener('keyboardDidHide',keyboardDidHide);
@@ -87,7 +93,7 @@ function Login() {
   function keyboardDidShow(){
 Animated.parallel([
   Animated.timing(logo.x,{
-    toValue:150,
+    toValue:75,
     duration:100,
     useNativeDriver:false
   }),
@@ -148,16 +154,18 @@ Animated.parallel([
                 style={estilo.inputs}
                 placeholder="E-mail"
                 autoCorrect={false}
-                onChangeText={()=>{}}
+                
+                onChangeText={(User)=>setUser(User)}
                 ></TextInput>
                 <TextInput
                 style={estilo.inputs}
                 placeholder="Senha"
                 autoCorrect={false}
-                onChangeText={()=>{}}
+                onChangeText={(Password)=>setPassword(Password)}
                 
                 ></TextInput>
                 <TouchableOpacity
+                onPress={()=>{isLogado}}
                 style={estilo.button}
                 >
                <Text
