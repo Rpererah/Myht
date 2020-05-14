@@ -10,7 +10,10 @@ import  {
   StyleSheet,
   Keyboard
 } from 'react-native' ;
+import auth from '@react-native-firebase/auth';
 
+const mensagemErro="[auth/user-not-found] There is no user record corresponding to this identifier. The user may have been deleted."
+const mensagemErro2="[auth/wrong-password] The password is invalid or the user does not have a password."
 
 const estilo=StyleSheet.create({
   background:{
@@ -20,6 +23,7 @@ const estilo=StyleSheet.create({
   containerLogo:{
     flex:1,
     alignItems:'center',
+    
   },
   container:{
     flex:1,
@@ -28,18 +32,18 @@ const estilo=StyleSheet.create({
   },
   inputs:{
     backgroundColor:'white',
-    height:55,
+    height:50,
     width:'80%',
     borderRadius:7,
     fontSize:20,
     padding:10,
-    marginBottom:'4%'
+    marginBottom:15
   },
   button:{
     marginTop:'3%',
     backgroundColor:'#3E92CC',
     width:'80%',
-    height:43,
+    height:40,
     borderRadius:7,
     alignItems:'center',
     justifyContent:'center',
@@ -58,16 +62,54 @@ const estilo=StyleSheet.create({
 
 
 function Login() {
-  const [offset]=useState(new Animated.ValueXY({x:0,y:95}));
+  const [offset]=useState(new Animated.ValueXY({x:0,y:90}));
   const [opacity]=useState(new Animated.Value(0));
-  const  [logo]=useState(new Animated.ValueXY({x:240,y:300}));
+  const  [logo]=useState(new Animated.ValueXY({x:250,y:300}));
 
-  const [User,setUser]=useState();
-    const [Password,setPassword]=useState();
+const [usuario, setUsuario] = useState("");
+const [senha, setSenha] = useState("");
 
   isLogado=()=>{    
-    alert(User);
+    try{
+      auth()
+  .signInWithEmailAndPassword(usuario, senha)
+  .then(() => {
+    alert('usuario logado');
+  }).catch(function(error){
+  var errorMessage = error.message;
+  if(errorMessage===mensagemErro || errorMessage===mensagemErro2) {
+    alert("Usuario ou senha incorreto")
   }
+  })
+    }catch(erro){
+      console.log(erro)
+    }
+  }
+
+  cadastrar=()=>{
+    try{
+      auth()
+  .createUserWithEmailAndPassword(usuario, senha)
+  .then(() => {
+    alert('Usuario Criado Com Sucesso');
+  })
+  .catch(error => {
+    if (error.code === 'auth/email-already-in-use') {
+      alert('esse usuario ja está em uso');
+    }
+
+    if (error.code === 'auth/invalid-email') {
+      console.log('formato de email invalido');
+    }
+
+    console.error(error);
+  });
+    }catch(erro){
+      console.log(erro)
+    }
+  }
+
+
 
   useEffect(()=>{
     keyDidShowListener=Keyboard.addListener('keyboardDidShow',keyboardDidShow);
@@ -76,14 +118,15 @@ function Login() {
 
       Animated.spring(offset.y,{
       toValue:0,
-      speed:4,
+      speed:3,
       bounciness:18,
       useNativeDriver:false
     }),
     Animated.timing(opacity,{
       toValue:1,
-      duration:200,
+      duration:300,
       useNativeDriver:false
+  
     }),
 
     ]).start();
@@ -93,12 +136,12 @@ function Login() {
   function keyboardDidShow(){
 Animated.parallel([
   Animated.timing(logo.x,{
-    toValue:75,
+    toValue:100,
     duration:100,
     useNativeDriver:false
   }),
   Animated.timing(logo.y,{
-    toValue:200,
+    toValue:150,
     duration:100,
     useNativeDriver:false
   })
@@ -108,12 +151,12 @@ Animated.parallel([
   function keyboardDidHide(){
     Animated.parallel([
       Animated.timing(logo.x,{
-        toValue:300,
-        duration:100,
+        toValue:250,
+        duration:300,
         useNativeDriver:false
       }),
       Animated.timing(logo.y,{
-        toValue:400,
+        toValue:300,
         duration:300,
         useNativeDriver:false
       })
@@ -134,6 +177,7 @@ Animated.parallel([
               style={{
                 height:logo.x,
                 width:logo.y,
+                marginBottom:"3%"
               }}
                 source={require('./../../../resources/img/LHT.png')}
                 />
@@ -154,25 +198,28 @@ Animated.parallel([
                 style={estilo.inputs}
                 placeholder="E-mail"
                 autoCorrect={false}
-                
-                onChangeText={(User)=>setUser(User)}
+                secureTextEntry={false}
+                onChangeText={text=>setUsuario(text)}
                 ></TextInput>
                 <TextInput
                 style={estilo.inputs}
                 placeholder="Senha"
                 autoCorrect={false}
-                onChangeText={(Password)=>setPassword(Password)}
+                secureTextEntry={true}
+                onChangeText={text=>setSenha(text)}
                 
                 ></TextInput>
                 <TouchableOpacity
-                onPress={()=>{isLogado}}
+                onPress={isLogado}
                 style={estilo.button}
                 >
                <Text
                style={estilo.txtButton}
                >Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                onPress={cadastrar}
+                >
                <Text
                style={estilo.txtButton2}
                >Cadastrar-se</Text>

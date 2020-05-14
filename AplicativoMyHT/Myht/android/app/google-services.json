@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "33488899204",
+    "firebase_url": "https://hometechauth.firebaseio.com",
+    "project_id": "hometechauth",
+    "storage_bucket": "hometechauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33488899204:android:024c2c6446088363c6c6d1",
+        "android_client_info": {
+          "package_name": "com.myht"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "33488899204-l1rr8ont2e2o7m7s8bgfj54c8um98p7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsRywUHSmwW4z6u0kWMSiz8yNBc1vo3fU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "33488899204-l1rr8ont2e2o7m7s8bgfj54c8um98p7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
